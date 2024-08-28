@@ -1,42 +1,96 @@
-import { createContext, useReducer } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { useContext, useEffect } from "react";
+import { useState } from "react";
+import { createContext } from "react";
+import { auth, db } from "../firebase/firebase";
+import Loading from "../components/Loading/Loading";
+import { collection, onSnapshot, query } from "firebase/firestore";
+import useFetch from "../components/hooks/useFetch";
+import PropTypes from "prop-types";
 
 const BlogContext = createContext();
 
-const blogReducer = (state, action) => {
-  switch (action.type) {
-    case "ADD_BLOG":
-      return [...state, action.payload];
-    case "EDIT_BLOG":
-      return state.map((blog) =>
-        blog.id === action.payload.id ? action.payload : blog
-      );
-    case "DELETE_BLOG":
-      return state.filter((blog) => blog.id !== action.payload);
-    default:
-      return state;
-  }
-};
+const Context = ({ children }) => {
+  const [currentUser, setCurrentUser] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [userLoading, setUserLoading] = useState(true);
+  const [allUsers, setAllUsers] = useState([]);
+  const [showComment, setShowComment] = useState(false);
+  const [commentLength, setCommentLength] = useState(0);
+  const [authModel, setAuthModel] = useState(false);
 
-const BlogProvider = ({ children }) => {
-  const [blogs, dispatch] = useReducer(blogReducer, []);
+  const [updateData, setUpdateData] = useState({});
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
 
-  const addBlog = (blog) => {
-    dispatch({ type: "ADD_BLOG", payload: blog });
-  };
+  const [publish, setPublish] = useState(false);
 
-  const editBlog = (blog) => {
-    dispatch({ type: "EDIT_BLOG", payload: blog });
-  };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setCurrentUser(user);
+      } else {
+        setCurrentUser(null);
+      }
+      setLoading(false);
+    });
 
-  const deleteBlog = (id) => {
-    dispatch({ type: "DELETE_BLOG", payload: id });
-  };
+    return () => unsubscribe();
+  }, [currentUser]);
+
+  // get users
+  useEffect(() => {
+    const getUsers = () => {
+      const postRef = query(collection(db, "users"));
+      onSnapshot(postRef, (snapshot) => {
+        setAllUsers(
+          snapshot.docs.map((doc) => ({
+            ...doc.data(),
+            id: doc.id,
+          }))
+        );
+        setUserLoading(false);
+      });
+    };
+    getUsers();
+  }, []);
+
+  const { data: postData, loading: postLoading } = useFetch("posts");
 
   return (
-    <BlogContext.Provider value={{ blogs, addBlog, editBlog, deleteBlog }}>
-      {children}
+    <BlogContext.Provider
+      value={{
+        currentUser,
+        setCurrentUser,
+        allUsers,
+        userLoading,
+        publish,
+        setPublish,
+        showComment,
+        setShowComment,
+        commentLength,
+        setCommentLength,
+        updateData,
+        setUpdateData,
+        title,
+        setTitle,
+        description,
+        setDescription,
+        postData,
+        postLoading,
+        authModel,
+        setAuthModel,
+      }}
+    >
+      {loading ? <Loading /> : children}
     </BlogContext.Provider>
   );
 };
 
-export { BlogContext, BlogProvider };
+Context.propTypes = {
+  children: PropTypes.node.isRequired,
+};
+
+export default Context;
+
+export const Blog = () => useContext(BlogContext);
