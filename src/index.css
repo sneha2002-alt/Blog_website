@@ -7,7 +7,7 @@
 }
 
 body {
-  @apply relative;
+  @apply font-texts relative;
 }
 
 .size {
