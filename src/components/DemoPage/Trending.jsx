@@ -1,13 +1,27 @@
 import { Blog } from "../../context/BlogContext";
 import { BsGraphUpArrow } from "react-icons/bs";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import moment from "moment";
 import { readTime } from "../../utils/helper";
 import PropTypes from "prop-types";
+
 const Trending = () => {
   const { postData } = Blog();
   const getTrending =
     postData && postData?.sort((a, b) => b.pageViews - a.pageViews);
+
+  const itemsPerPage = 4;
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = getTrending?.slice(indexOfFirstItem, indexOfLastItem);
+
+  const totalPages = Math.ceil(getTrending?.length / itemsPerPage);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <section className="border-b border-gray-600">
       <div className="size py-[2rem]">
@@ -18,11 +32,20 @@ const Trending = () => {
           <h2>Trending on Blog</h2>
         </div>
         <div className="grid grid-cols-card gap-3">
-          {getTrending &&
-            getTrending
-              .slice(0, 6)
-              .map((trend, i) => <Trend trend={trend} key={i} index={i} />)}
+          {currentItems &&
+            currentItems.map((trend, i) => (
+              <Trend
+                trend={trend}
+                key={i + indexOfFirstItem}
+                index={i + indexOfFirstItem}
+              />
+            ))}
         </div>
+        <Pagination
+          totalPages={totalPages}
+          paginate={paginate}
+          currentPage={currentPage}
+        />
       </div>
     </section>
   );
@@ -79,4 +102,36 @@ Trend.propTypes = {
     desc: PropTypes.string,
   }).isRequired,
   index: PropTypes.number.isRequired,
+};
+
+const Pagination = ({ totalPages, paginate, currentPage }) => {
+  const pageNumbers = [];
+
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+
+  return (
+    <div className="flex justify-center gap-2 mt-4">
+      {pageNumbers.map((number) => (
+        <button
+          key={number}
+          onClick={() => paginate(number)}
+          className={`px-3 py-1 rounded ${
+            currentPage === number
+              ? "bg-black/90 text-white hover:bg-black/70"
+              : "bg-gray-200"
+          }`}
+        >
+          {number}
+        </button>
+      ))}
+    </div>
+  );
+};
+
+Pagination.propTypes = {
+  totalPages: PropTypes.number.isRequired,
+  paginate: PropTypes.func.isRequired,
+  currentPage: PropTypes.number.isRequired,
 };
