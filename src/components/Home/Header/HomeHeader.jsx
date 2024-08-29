@@ -1,6 +1,5 @@
 import { useState } from "react";
-
-import { BsMedium } from "react-icons/bs";
+import { FaBlog } from "react-icons/fa6";
 import { CiSearch } from "react-icons/ci";
 import { LiaEditSolid } from "react-icons/lia";
 import { IoMdNotificationsOutline } from "react-icons/io";
@@ -56,8 +55,8 @@ const HomeHeader = () => {
         {/* left side  */}
         <div className="flex items-center gap-3">
           <Link to={"/"}>
-            <span className="text-5xl">
-              <BsMedium />
+            <span className="text-4xl">
+              <FaBlog />
             </span>
           </Link>
           <Search modal={searchModal} setModal={setSearchModal} />
