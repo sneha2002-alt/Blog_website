@@ -17,10 +17,15 @@ The blog application is a dynamic platform where users can create, edit, and man
 
 ## Usage
 Homepage: View a list of all blog posts.
+
 Single Blog Page: Click on a blog title to view the full post.
+
 Login/Signup: Users must log in to add, edit, or delete posts.
+
 Add Blog: Use the form to submit a new blog post.
+
 Edit Blog: Edit existing blog posts by clicking the edit button.
+
 Delete Blog: Remove your blog posts using the delete button.
 
 ## Technologies 
