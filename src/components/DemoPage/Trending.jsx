@@ -15,7 +15,7 @@ const Trending = () => {
           <span>
             <BsGraphUpArrow />
           </span>
-          <h2>Trending on Medium</h2>
+          <h2>Trending on Blog</h2>
         </div>
         <div className="grid grid-cols-card gap-3">
           {getTrending &&
