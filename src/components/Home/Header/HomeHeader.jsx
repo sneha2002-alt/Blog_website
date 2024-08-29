@@ -55,7 +55,7 @@ const HomeHeader = () => {
         {/* left side  */}
         <div className="flex items-center gap-3">
           <Link to={"/"}>
-            <span className="text-4xl">
+            <span className="text-3xl">
               <FaBlog />
             </span>
           </Link>
