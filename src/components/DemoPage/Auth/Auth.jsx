@@ -60,7 +60,7 @@ const Auth = ({ modal, setModal }) => {
           {signReq === "" ? (
             <>
               <h2 className="text-2xl pt-[5rem]">
-                {createUser ? "Join Medium" : "Welcome Back"}
+                {createUser ? "Join Us" : "Welcome Back"}
               </h2>
               <div className="flex flex-col gap-2 w-fit mx-auto">
                 <Button
@@ -94,15 +94,14 @@ const Auth = ({ modal, setModal }) => {
             <SignUp setModal={setModal} setSignReq={setSignReq} />
           ) : null}
           <p className="md:w-[30rem] mx-auto text-center text-sm mb-[3rem]">
-            Click “Sign In” to agree to Medium’s Terms of Service and
-            acknowledge that Medium’s Privacy Policy applies to you.
+            Click &ldquo;Sign In&rdquo; to agree to Blog&apos;s Terms of Service
+            and acknowledge that Blog&apos;s Privacy Policy applies to you.
           </p>
         </div>
       </section>
     </Modal>
   );
 };
-
 Auth.propTypes = {
   modal: PropTypes.bool.isRequired,
   setModal: PropTypes.func.isRequired,

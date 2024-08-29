@@ -7,7 +7,6 @@ import { Blog } from "../../context/BlogContext";
 const DemoHeader = () => {
   const [isActive, setIsActive] = useState(false);
   const { authModel, setAuthModel } = Blog();
-
   useEffect(() => {
     const scrollMe = () => {
       window.scrollY > 50 ? setIsActive(true) : setIsActive(false);
