@@ -140,7 +140,7 @@ const Preview = ({ setPublish, description, title }) => {
               <span className="font-bold capitalize">The Blog Brigade</span>
             </h3>
             <p>
-              Add or change topics up to 5 so readers know what your story is
+              Add or change topics up to 3 so readers know what your story is
               about
             </p>
             <TagsInput value={tags} onChange={setTags} />
