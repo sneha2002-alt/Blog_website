@@ -53,7 +53,7 @@ const UserModal = ({ setModal }) => {
     >
       <Link
         to="/write"
-        className="flex md:hidden items-center gap-1 text-gray-500"
+        className="flex md:hidden items-center gap-1 text-gray-500 pb-2"
       >
         <span className="text-3xl">
           <LiaEditSolid />
