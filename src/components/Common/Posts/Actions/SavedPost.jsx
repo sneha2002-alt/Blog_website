@@ -13,8 +13,7 @@ const SavedPost = ({ post }) => {
   const { data } = useSingleFetch("users", post?.userId, "savePost");
 
   useEffect(() => {
-    setIsSaved(data && data?.find((item) => item.id === currentUser?.uid)) !==
-      -1;
+    setIsSaved(data && data.some((item) => item.id === post?.id));
   }, [data, post?.id]);
 
   const handleSave = async () => {
