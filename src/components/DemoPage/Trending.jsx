@@ -11,7 +11,7 @@ const Trending = () => {
   const getTrending =
     postData && postData?.sort((a, b) => b.pageViews - a.pageViews);
 
-  const itemsPerPage = 4;
+  const itemsPerPage = 3;
   const [currentPage, setCurrentPage] = useState(1);
 
   const indexOfLastItem = currentPage * itemsPerPage;

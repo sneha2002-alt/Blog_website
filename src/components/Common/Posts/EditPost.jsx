@@ -10,7 +10,7 @@ const EditPost = () => {
       setTitle(updateData.title);
       setDescription(updateData.description);
     }
-  }, [updateData]);
+  }, [updateData, setTitle, setDescription]);
 
   return (
     <section className="write w-[90%] md:w-[80%] lg:w-[60%] mx-auto py-[3rem]">

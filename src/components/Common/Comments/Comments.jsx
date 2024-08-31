@@ -47,7 +47,7 @@ const Comments = ({ postId }) => {
     if (data) {
       setCommentLength(data.length);
     }
-  }, [data]);
+  }, [data, setCommentLength]);
 
   return (
     <Modal setModal={setShowComment} modal={showComment}>
