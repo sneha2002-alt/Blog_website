@@ -15,7 +15,7 @@ const FollowBtn = ({ userId }) => {
 
   useEffect(() => {
     setIsFollowed(data && data?.findIndex((item) => item.id === userId) !== -1);
-  }, [data]);
+  }, [data, userId]);
 
   const handleFollow = async () => {
     try {

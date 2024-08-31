@@ -24,8 +24,9 @@ const SinglePost = () => {
 
   // increment page views
   const isInitialRender = useRef(true);
+
   useEffect(() => {
-    if (isInitialRender?.current) {
+    if (isInitialRender.current) {
       const incrementPageView = async () => {
         try {
           const ref = doc(db, "posts", postId);
@@ -41,9 +42,9 @@ const SinglePost = () => {
         }
       };
       incrementPageView();
+      isInitialRender.current = false; // Move this inside the `if` block
     }
-    isInitialRender.current = false;
-  }, []);
+  }, [postId]); // Add postId as a dependency
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -59,7 +60,7 @@ const SinglePost = () => {
             const getUser = await getDoc(userRef);
 
             if (getUser.exists()) {
-              const { created, ...rest } = getUser.data();
+              const { ...rest } = getUser.data();
               setPost({ ...postData, ...rest, id: postId });
             }
           }
