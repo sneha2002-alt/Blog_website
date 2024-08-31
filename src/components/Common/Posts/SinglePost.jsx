@@ -60,7 +60,7 @@ const SinglePost = () => {
             const getUser = await getDoc(userRef);
 
             if (getUser.exists()) {
-              const { ...rest } = getUser.data();
+              const { created, ...rest } = getUser.data();
               setPost({ ...postData, ...rest, id: postId });
             }
           }

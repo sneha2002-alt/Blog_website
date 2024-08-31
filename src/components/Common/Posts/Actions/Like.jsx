@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { PiHandsClappingDuotone } from "react-icons/pi";
+import { BiLike } from "react-icons/bi";
 import { Blog } from "../../../../context/BlogContext";
 import { deleteDoc, doc, setDoc } from "firebase/firestore";
 import { db } from "../../../../firebase/firebase";
@@ -18,7 +18,7 @@ const Like = ({ postId }) => {
     setIsLiked(
       data && data.findIndex((item) => item.id === currentUser?.uid) !== -1
     );
-  }, [data]);
+  }, [data, currentUser]);
 
   const handleLike = async () => {
     try {
@@ -40,9 +40,10 @@ const Like = ({ postId }) => {
   };
   return (
     <button onClick={handleLike} className="flex items-center gap-1 text-sm">
-      <PiHandsClappingDuotone
+      <BiLike
         className={`text-xl ${isLiked ? "text-black" : "text-gray-500"}`}
       />
+
       <span>{formatNum(data?.length)}</span>
     </button>
   );
